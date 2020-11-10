@@ -371,8 +371,7 @@ controller:
       annotations: {}
 
       ## Restrict access For LoadBalancer service. Defaults to 0.0.0.0/0.
-      loadBalancerSourceRanges:
-        - 10.20.0.0/16
+      loadBalancerSourceRanges: 10.20.0.0/16
 
       ## Set external traffic policy to: "Local" to preserve source IP on
       ## providers supporting it
