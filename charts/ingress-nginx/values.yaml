@@ -197,18 +197,18 @@ controller:
     #           operator: In
     #           values:
     #           - controller
-    #       topologyKey: kubernetes.io/hostname
-  podAntiAffinity:
-    preferredDuringSchedulingIgnoredDuringExecution:
-    - podAffinityTerm:
-        labelSelector:
-          matchExpressions:
-          - key: app
-            operator: In
-            values:
-            - eks-tyc-ingress-apps
-        topologyKey: kubernetes.io/hostname
-      weight: 100
+      #       topologyKey: kubernetes.io/hostname
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: app
+              operator: In
+              values:
+              - eks-tyc-ingress-apps
+          topologyKey: kubernetes.io/hostname
+        weight: 100
     # # An example of required pod anti-affinity
     # podAntiAffinity:
     #   requiredDuringSchedulingIgnoredDuringExecution:
