@@ -161,7 +161,23 @@ controller:
   ## Node tolerations for server scheduling to nodes with taints
   ## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
   ##
-  tolerations: []
+  tolerations:
+  - key: "spotInstance"
+    operator: "Equal"
+    value: "true"
+    effect: "PreferNoSchedule"
+  - key: "infra-apps"
+    operator: "Equal"
+    value: "true"
+    effect: "NoExecute"
+  - key: "node.kubernetes.io/unreachable"
+    operator: "Exists"
+    effect: "NoExecute"
+    tolerationSeconds: 120
+  - key: "node.kubernetes.io/not-ready"
+    operator: "Exists"
+    effect: "NoExecute"
+    tolerationSeconds: 120
   #  - key: "key"
   #    operator: "Equal|Exists"
   #    value: "value"
@@ -178,7 +194,7 @@ controller:
           - key: lifecycle
             operator: In
             values:
-            - EC2Spot
+            - OnDemand
         weight: 1
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
@@ -187,6 +203,7 @@ controller:
             operator: In
             values:
             - apps
+            - control-apps
     #           values:
     #           - ingress-nginx
     #         - key: app.kubernetes.io/instance
