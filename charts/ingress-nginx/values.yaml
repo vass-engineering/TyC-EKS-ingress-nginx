@@ -302,9 +302,9 @@ controller:
   # Ideally, there should be no limits.
   # https://engineering.indeedblog.com/blog/2019/12/cpu-throttling-regression-fix/
   resources:
-  #  limits:
-  #    cpu: 100m
-  #    memory: 90Mi
+    limits:
+      cpu: 200m
+      memory: 100Mi
     requests:
       cpu: 100m
       memory: 90Mi
