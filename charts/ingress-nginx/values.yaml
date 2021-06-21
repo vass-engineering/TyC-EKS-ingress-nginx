@@ -17,10 +17,7 @@ controller:
     https: 443
 
   # Will add custom configuration options to Nginx https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/
-  config:
-    compute-full-forwarded-for: 'true'
-    use-forwarded-headers: 'true'
-    use-proxy-protocol: 'true'
+  config: {}
 
   ## Annotations to be added to the controller config configuration configmap
   ##
@@ -64,11 +61,10 @@ controller:
 
   ## Name of the ingress class to route through this controller
   ##
-  ingressClass: eks-tyc-ingress-nginx-apps
+  ingressClass: nginx
 
   # labels to add to the pod container metadata
-  podLabels:
-    app: eks-tyc-ingress-apps
+  podLabels: {}
   #  key: value
 
   ## Security Context policies for controller pods
@@ -121,8 +117,7 @@ controller:
   ## E.g. to specify the default SSL certificate you can use
   ## extraArgs:
   ##   default-ssl-certificate: "<namespace>/<secret_name>"
-  extraArgs:
-    enable-ssl-passthrough: "true"
+  extraArgs: {}
 
   ## Additional environment variables to set
   extraEnvs: []
@@ -164,32 +159,25 @@ controller:
   ## Node tolerations for server scheduling to nodes with taints
   ## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
   ##
-  tolerations:
-  - key: "premium"
-    operator: "Equal"
-    value: "true"
-    effect: "NoSchedule"
+  tolerations: []
+  #  - key: "key"
+  #    operator: "Equal|Exists"
+  #    value: "value"
+  #    effect: "NoSchedule|PreferNoSchedule|NoExecute(1.6 only)"
 
   ## Affinity and anti-affinity
   ## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
   ##
-  affinity:
-    nodeAffinity:
-      preferredDuringSchedulingIgnoredDuringExecution:
-      - preference:
-          matchExpressions:
-          - key: lifecycle
-            operator: In
-            values:
-            - OnDemand
-        weight: 1
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-          - key: intent
-            operator: In
-            values:
-            - premium-apps
+  affinity: {}
+    # # An example of preferred pod anti-affinity, weight is in the range 1-100
+    # podAntiAffinity:
+    #   preferredDuringSchedulingIgnoredDuringExecution:
+    #   - weight: 100
+    #     podAffinityTerm:
+    #       labelSelector:
+    #         matchExpressions:
+    #         - key: app.kubernetes.io/name
+    #           operator: In
     #           values:
     #           - ingress-nginx
     #         - key: app.kubernetes.io/instance
@@ -200,18 +188,8 @@ controller:
     #           operator: In
     #           values:
     #           - controller
-      #       topologyKey: kubernetes.io/hostname
-    podAntiAffinity:
-      preferredDuringSchedulingIgnoredDuringExecution:
-      - podAffinityTerm:
-          labelSelector:
-            matchExpressions:
-            - key: app
-              operator: In
-              values:
-              - eks-tyc-ingress-apps
-          topologyKey: kubernetes.io/hostname
-        weight: 100
+    #       topologyKey: kubernetes.io/hostname
+
     # # An example of required pod anti-affinity
     # podAntiAffinity:
     #   requiredDuringSchedulingIgnoredDuringExecution:
@@ -279,7 +257,7 @@ controller:
   ##
   podAnnotations: {}
 
-  replicaCount: 3
+  replicaCount: 1
 
   minAvailable: 1
 
@@ -326,8 +304,7 @@ controller:
   service:
     enabled: true
 
-    annotations:
-      service.beta.kubernetes.io/aws-load-balancer-type: nlb
+    annotations: {}
     labels: {}
     # clusterIP: ""
 
@@ -337,8 +314,7 @@ controller:
     externalIPs: []
 
     # loadBalancerIP: ""
-    loadBalancerSourceRanges:
-      - 10.20.0.0/16
+    loadBalancerSourceRanges: []
 
     enableHttp: true
     enableHttps: true
@@ -346,7 +322,7 @@ controller:
     ## Set external traffic policy to: "Local" to preserve source IP on
     ## providers supporting it
     ## Ref: https://kubernetes.io/docs/tutorials/services/source-ip/#source-ip-for-services-with-typeloadbalancer
-    externalTrafficPolicy: "Local"
+    # externalTrafficPolicy: ""
 
     # Must be either "None" or "ClientIP" if set. Kubernetes will default to "None".
     # Ref: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
@@ -355,7 +331,7 @@ controller:
     # specifies the health check node port (numeric port number) for the service. If healthCheckNodePort isn’t specified,
     # the service controller allocates a port from your cluster’s NodePort range.
     # Ref: https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
-    healthCheckNodePort: 30150
+    # healthCheckNodePort: 0
 
     ports:
       http: 80
@@ -639,9 +615,9 @@ defaultBackend:
   ##
   podAnnotations: {}
 
-  replicaCount: 2
+  replicaCount: 1
 
-  minAvailable: 2
+  minAvailable: 1
 
   resources: {}
   # limits:
