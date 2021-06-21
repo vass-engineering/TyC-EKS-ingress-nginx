@@ -61,7 +61,7 @@ controller:
 
   ## Name of the ingress class to route through this controller
   ##
-  ingressClass: nginx
+  ingressClass: eks-tyc-ingress-nginx-apps
 
   # labels to add to the pod container metadata
   podLabels: {}
@@ -117,7 +117,8 @@ controller:
   ## E.g. to specify the default SSL certificate you can use
   ## extraArgs:
   ##   default-ssl-certificate: "<namespace>/<secret_name>"
-  extraArgs: {}
+  extraArgs:
+    enable-ssl-passthrough: "true"
 
   ## Additional environment variables to set
   extraEnvs: []
@@ -159,16 +160,43 @@ controller:
   ## Node tolerations for server scheduling to nodes with taints
   ## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
   ##
-  tolerations: []
-  #  - key: "key"
-  #    operator: "Equal|Exists"
-  #    value: "value"
-  #    effect: "NoSchedule|PreferNoSchedule|NoExecute(1.6 only)"
+  tolerations:
+  - key: "premium"
+    operator: "Equal"
+    value: "true"
+    effect: "NoSchedule"
 
   ## Affinity and anti-affinity
   ## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
   ##
-  affinity: {}
+  affinity:
+    nodeAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - preference:
+          matchExpressions:
+          - key: lifecycle
+            operator: In
+            values:
+            - OnDemand
+        weight: 1
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: intent
+            operator: In
+            values:
+            - premium-apps
+      podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: app
+              operator: In
+              values:
+              - eks-tyc-ingress-apps
+          topologyKey: kubernetes.io/hostname
+        weight: 100
     # # An example of preferred pod anti-affinity, weight is in the range 1-100
     # podAntiAffinity:
     #   preferredDuringSchedulingIgnoredDuringExecution:
@@ -304,7 +332,8 @@ controller:
   service:
     enabled: true
 
-    annotations: {}
+    annotations:
+      service.beta.kubernetes.io/aws-load-balancer-type: nlb
     labels: {}
     # clusterIP: ""
 
@@ -314,7 +343,8 @@ controller:
     externalIPs: []
 
     # loadBalancerIP: ""
-    loadBalancerSourceRanges: []
+    loadBalancerSourceRanges:
+      - 10.20.0.0/16
 
     enableHttp: true
     enableHttps: true
@@ -603,7 +633,8 @@ defaultBackend:
   podSecurityContext: {}
 
   # labels to add to the pod container metadata
-  podLabels: {}
+  podLabels:
+    app: eks-tyc-ingress-apps
   #  key: value
 
   ## Node labels for default backend pod assignment
@@ -615,9 +646,9 @@ defaultBackend:
   ##
   podAnnotations: {}
 
-  replicaCount: 1
+  replicaCount: 2
 
-  minAvailable: 1
+  minAvailable: 2
 
   resources: {}
   # limits:
