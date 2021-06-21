@@ -64,7 +64,8 @@ controller:
   ingressClass: eks-tyc-ingress-nginx-apps
 
   # labels to add to the pod container metadata
-  podLabels: {}
+  podLabels:
+    app: eks-tyc-ingress-apps
   #  key: value
 
   ## Security Context policies for controller pods
@@ -165,6 +166,10 @@ controller:
     operator: "Equal"
     value: "true"
     effect: "NoSchedule"
+  #  - key: "key"
+  #    operator: "Equal|Exists"
+  #    value: "value"
+  #    effect: "NoSchedule|PreferNoSchedule|NoExecute(1.6 only)"
 
   ## Affinity and anti-affinity
   ## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
@@ -186,17 +191,6 @@ controller:
             operator: In
             values:
             - premium-apps
-      podAntiAffinity:
-      preferredDuringSchedulingIgnoredDuringExecution:
-      - podAffinityTerm:
-          labelSelector:
-            matchExpressions:
-            - key: app
-              operator: In
-              values:
-              - eks-tyc-ingress-apps
-          topologyKey: kubernetes.io/hostname
-        weight: 100
     # # An example of preferred pod anti-affinity, weight is in the range 1-100
     # podAntiAffinity:
     #   preferredDuringSchedulingIgnoredDuringExecution:
@@ -216,7 +210,17 @@ controller:
     #           operator: In
     #           values:
     #           - controller
-    #       topologyKey: kubernetes.io/hostname
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: app
+              operator: In
+              values:
+              - eks-tyc-ingress-apps
+          topologyKey: kubernetes.io/hostname
+        weight: 100
 
     # # An example of required pod anti-affinity
     # podAntiAffinity:
@@ -633,8 +637,7 @@ defaultBackend:
   podSecurityContext: {}
 
   # labels to add to the pod container metadata
-  podLabels:
-    app: eks-tyc-ingress-apps
+  podLabels: {}
   #  key: value
 
   ## Node labels for default backend pod assignment
