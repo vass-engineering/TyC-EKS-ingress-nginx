@@ -10,7 +10,7 @@ controller:
     # www-data -> uid 101
     runAsUser: 101
     allowPrivilegeEscalation: true
-
+##
   # Configures the ports the nginx-controller listens on
   containerPort:
     http: 80
