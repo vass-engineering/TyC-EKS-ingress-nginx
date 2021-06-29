@@ -60,15 +60,15 @@ controller:
 
   ## Election ID to use for status update
   ##
-  electionID: ingress-controller-leader
+  electionID: ingress-controller-leader-pre
 
   ## Name of the ingress class to route through this controller
   ##
-  ingressClass: eks-tyc-ingress-nginx-apps
+  ingressClass: eks-tyc-ingress-nginx-apps-pre
 
   # labels to add to the pod container metadata
   podLabels:
-    app: eks-tyc-ingress-apps
+    app: eks-tyc-ingress-apps-pre
   #  key: value
 
   ## Security Context policies for controller pods
@@ -221,7 +221,7 @@ controller:
             - key: app
               operator: In
               values:
-              - eks-tyc-ingress-apps
+              - eks-tyc-ingress-apps-pre
           topologyKey: kubernetes.io/hostname
         weight: 100
 
@@ -292,7 +292,7 @@ controller:
   ##
   podAnnotations: {}
 
-  replicaCount: 3
+  replicaCount: 1
 
   minAvailable: 1
 
@@ -311,7 +311,7 @@ controller:
   autoscaling:
     enabled: false
     minReplicas: 1
-    maxReplicas: 11
+    maxReplicas: 3
     targetCPUUtilizationPercentage: 50
     targetMemoryUtilizationPercentage: 50
 
@@ -652,7 +652,7 @@ defaultBackend:
   ##
   podAnnotations: {}
 
-  replicaCount: 2
+  replicaCount: 1
 
   minAvailable: 2
 
