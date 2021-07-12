@@ -292,7 +292,7 @@ controller:
   ##
   podAnnotations: {}
 
-  replicaCount: 1
+  replicaCount: 4
 
   minAvailable: 1
 
@@ -652,7 +652,7 @@ defaultBackend:
   ##
   podAnnotations: {}
 
-  replicaCount: 1
+  replicaCount: 4
 
   minAvailable: 2
 
