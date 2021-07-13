@@ -292,7 +292,7 @@ controller:
   ##
   podAnnotations: {}
 
-  replicaCount: 4
+  replicaCount: 1
 
   minAvailable: 1
 
