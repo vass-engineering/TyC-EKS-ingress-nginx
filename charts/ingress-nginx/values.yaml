@@ -21,6 +21,8 @@ controller:
   #  compute-full-forwarded-for: 'true'
   #  use-forwarded-headers: 'true'
   #  use-proxy-protocol: 'true'
+    proxy-protocol: 'True'
+    real-ip-header: 'proxy_protocol'
 
   ## Annotations to be added to the controller config configuration configmap
   ##
