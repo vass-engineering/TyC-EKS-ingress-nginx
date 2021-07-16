@@ -340,7 +340,7 @@ controller:
     enabled: true
 
     annotations:
-      service.beta.kubernetes.io/aws-load-balancer-type: alb
+      service.beta.kubernetes.io/aws-load-balancer-type: Classic
     labels: {}
     # clusterIP: ""
 
