@@ -18,9 +18,9 @@ controller:
 
   # Will add custom configuration options to Nginx https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/
   config:
-    compute-full-forwarded-for: 'true'
-    use-forwarded-headers: 'true'
-    use-proxy-protocol: 'true'
+  #  compute-full-forwarded-for: 'true'
+  #  use-forwarded-headers: 'true'
+  #  use-proxy-protocol: 'true'
   #  proxy-protocol: 'True'
   #  real-ip-header: 'proxy_protocol'
 
@@ -342,7 +342,9 @@ controller:
     enabled: true
 
     annotations:
-      service.beta.kubernetes.io/aws-load-balancer-type: Classic
+      service.beta.kubernetes.io/aws-load-balancer-type: "external"
+      service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: "instance"
+      service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
     labels: {}
     # clusterIP: ""
 
@@ -361,7 +363,7 @@ controller:
     ## Set external traffic policy to: "Local" to preserve source IP on
     ## providers supporting it
     ## Ref: https://kubernetes.io/docs/tutorials/services/source-ip/#source-ip-for-services-with-typeloadbalancer
-    externalTrafficPolicy: "Local"
+    # externalTrafficPolicy: "Local"
 
     # Must be either "None" or "ClientIP" if set. Kubernetes will default to "None".
     # Ref: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
