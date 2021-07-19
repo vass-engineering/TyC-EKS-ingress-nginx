@@ -17,10 +17,10 @@ controller:
     https: 443
 
   # Will add custom configuration options to Nginx https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/
-  config:
-    compute-full-forwarded-for: 'true'
-    use-forwarded-headers: 'true'
-    use-proxy-protocol: 'true'
+  config: {}
+    #compute-full-forwarded-for: 'true'
+    #use-forwarded-headers: 'true'
+    #use-proxy-protocol: 'true'
   #  proxy-protocol: 'True'
   #  real-ip-header: 'proxy_protocol'
 
@@ -364,7 +364,7 @@ controller:
     ## Set external traffic policy to: "Local" to preserve source IP on
     ## providers supporting it
     ## Ref: https://kubernetes.io/docs/tutorials/services/source-ip/#source-ip-for-services-with-typeloadbalancer
-    externalTrafficPolicy: "Local"
+    externalTrafficPolicy: "Cluster"
 
     # Must be either "None" or "ClientIP" if set. Kubernetes will default to "None".
     # Ref: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
@@ -373,7 +373,7 @@ controller:
     # specifies the health check node port (numeric port number) for the service. If healthCheckNodePort isn’t specified,
     # the service controller allocates a port from your cluster’s NodePort range.
     # Ref: https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
-    healthCheckNodePort: 30150
+    # healthCheckNodePort: 30150
 
     ports:
       http: 80
