@@ -18,9 +18,9 @@ controller:
 
   # Will add custom configuration options to Nginx https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/
   config: {}
-    # compute-full-forwarded-for: 'true'
-    # use-forwarded-headers: 'true'
-    # use-proxy-protocol: 'true'
+    compute-full-forwarded-for: 'true'
+    use-forwarded-headers: 'true'
+    use-proxy-protocol: 'true'
 
   ## Annotations to be added to the controller config configuration configmap
   ##
@@ -165,7 +165,7 @@ controller:
   ## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
   ##
   tolerations:
-  - key: "premium"
+  - key: "farmasites"
     operator: "Equal"
     value: "true"
     effect: "NoSchedule"
@@ -193,7 +193,7 @@ controller:
           - key: intent
             operator: In
             values:
-            - premium-apps
+            - farmasites-apps
     # # An example of preferred pod anti-affinity, weight is in the range 1-100
     # podAntiAffinity:
     #   preferredDuringSchedulingIgnoredDuringExecution:
