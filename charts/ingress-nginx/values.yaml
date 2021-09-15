@@ -20,7 +20,7 @@ controller:
   config:
     compute-full-forwarded-for: 'true'
     use-forwarded-headers: 'true'
-    use-proxy-protocol: 'true'
+    use-proxy-protocol: 'false'
 
 
   ## Annotations to be added to the controller config configuration configmap
