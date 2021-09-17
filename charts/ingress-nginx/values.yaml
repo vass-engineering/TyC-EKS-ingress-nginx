@@ -4,7 +4,7 @@
 controller:
   image:
     repository: k8s.gcr.io/ingress-nginx/controller
-    tag: "v0.41.0"
+    tag: "v0.49.0"
     digest: sha256:e6019e536cfb921afb99408d5292fa88b017c49dd29d05fc8dbc456aa770d590
     pullPolicy: IfNotPresent
     # www-data -> uid 101
@@ -29,7 +29,7 @@ controller:
 
   # Will add custom headers before sending traffic to backends according to https://github.com/kubernetes/ingress-nginx/tree/master/docs/examples/customization/custom-headers
   proxySetHeaders:
-      http_x_forwarded_proto: "http"
+      http_x_forwarded_proto: "true"
 
   # Will add custom headers before sending response traffic to the client according to: https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#add-headers
   addHeaders: {}
