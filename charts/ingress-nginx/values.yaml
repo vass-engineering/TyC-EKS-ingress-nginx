@@ -29,7 +29,7 @@ controller:
 
   # Will add custom headers before sending traffic to backends according to https://github.com/kubernetes/ingress-nginx/tree/master/docs/examples/customization/custom-headers
   proxySetHeaders:
-      http_x_forwarded_proto: "true"
+      proxy_set_header        X-Forwarded-Proto $http_x_forwarded_proto;
 
   # Will add custom headers before sending response traffic to the client according to: https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#add-headers
   addHeaders: {}
