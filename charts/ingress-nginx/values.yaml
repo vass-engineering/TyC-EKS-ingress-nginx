@@ -27,6 +27,7 @@ controller:
         if ($uri !~ "^(.*).well-known(.*)"){
           return 308 https://$host$request_uri;
         }
+      }
 
   ## Annotations to be added to the controller config configuration configmap
   ##
