@@ -27,10 +27,6 @@ controller:
         if ($uri !~ "^(.*).well-known(.*)"){
           return 308 https://$host$request_uri;
         }
-      }
-      server {
-        listen 80;
-      }
 
   ## Annotations to be added to the controller config configuration configmap
   ##
