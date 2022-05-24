@@ -124,7 +124,8 @@ controller:
   ingressClass: eks-tyc-ingress-nginx-apps
 
   # -- Labels to add to the pod container metadata
-  podLabels: {}
+  podLabels:
+    app: eks-tyc-ingress-apps
   #  key: value
 
   # -- Security Context policies for controller pods
