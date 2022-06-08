@@ -106,7 +106,7 @@ controller:
   ## IngressClass resources are supported since k8s >= 1.18 and required since k8s >= 1.19
   ingressClassResource:
     # -- Name of the ingressClass
-    name: eks-tyc-ingress-nginx-apps-pre
+    name: eks-tyc-ingress-nginx-internalapps
     # -- Is this ingressClass enabled or not
     enabled: true
     # -- Is this the default ingressClass for the cluster
@@ -121,11 +121,11 @@ controller:
 
   # -- For backwards compatibility with ingress.class annotation, use ingressClass.
   # Algorithm is as follows, first ingressClassName is considered, if not present, controller looks for ingress.class annotation
-  ingressClass: eks-tyc-ingress-nginx-apps-pre
+  ingressClass: eks-tyc-ingress-nginx-internalapps
 
   # -- Labels to add to the pod container metadata
   podLabels:
-    app: eks-tyc-ingress-apps-pre
+    app: eks-tyc-ingress-nginx-internalapps
   #  key: value
 
   # -- Security Context policies for controller pods
